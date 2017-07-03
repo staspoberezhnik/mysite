@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block login %}
+<div class="large-offset-3 large-6 columns">
+
+        <form action='{% url "auth:login"%}' method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if error %}
+                <p><label class="error">{{ error }}</label>
+            {% endif %}
+            <p><input class="button" type="submit" value="Log In">
+            <button class="btn btn-info"><a href='{% url "auth:register"%}'>Register</a></button>
+
+        </form>
+
+</div>
+{% endblock %}

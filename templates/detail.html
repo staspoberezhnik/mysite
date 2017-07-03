@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ post_instance.post_title }}
+{% endblock title %}
+{% block content %}
+
+<h1>{{ post_instance.post_title }}</h1>
+<h4>created :{{post_instance.post_date_created }}</h4>
+
+ {% if post_instance.post_image %}
+    <img src='{{ post_instance.post_image.url }}' class='img-responsive' width="400px" height="400px">
+    {% endif %}
+
+<p>{{ post_instance.post_content|linebreaks }}</p>
+<h4>author : {{ post_instance.post_user }}</h4>
+
+    {% if can_edit %}
+<p> <button type="button" class="btn btn-default" value="Edit"><a href="{% url 'post:edit' post_instance.id %}">Edit</a> </button></p>
+    {% endif %}
+
+<hr>
+    {% if tag_instance %}
+    <h4>TAGS</h4>
+  {% for tag in tag_instance %}
+    <p>{{ tag.tag_text}} </p>
+    {% endfor %}
+    {% endif %}
+
+    {% if tag_form %}
+        <form method="POST"  action="addtag/">
+        {% csrf_token %}
+        {{ tag_form }}
+
+        <input type="submit" class="btn btn-default" value="Add Tag" size="small">
+        </form>
+    {% endif %}
+
+<div class="comments">
+    {% if comment_instance %}
+<h2>Comments</h2>
+        <hr>
+    {% for com in comment_instance %}
+        <p>{{ com.created }}</p>
+        <p>user left :{{ com.user_left }}</p>
+        <p>{{ com.comment_text }}</p>
+        <hr>
+    {% endfor %}
+    {% endif %}
+    {% if form %}
+        <form method="POST" enctype="multipart/form-data" action=" addcomment/ ">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" class="btn btn-default" value="Add comment" size="small">
+        </form>
+    {% endif %}
+</div>
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+   <!--Post :  {{ comment.post_to }}-->
+
+
+        {% for comment in comments %}
+        <p>
+            <strong>Post :</strong> {{ comment.post_to }}
+
+    <strong>comment :</strong> {{ comment.comment_text }} </p>
+        {% endfor %}
+
+<hr>
+<!--{% for comment in comments %}-->
+<!--{% endfor %}-->
+{% endblock content %}

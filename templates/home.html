@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+HOME
+{% endblock title %}
+
+{% block content %}
+{% for post in post_list %}
+<h3><a href='{{ post.get_absolute_url }}'>{{ post.post_title}}</a></h3>
+<h3>{{ post.post_date_created }}</h3>
+
+ {% if post.post_image %}
+        <img src='{{ post.post_image.url }}' class='img-responsive' width="400px" height="400px" >
+    {% endif %}
+<p>{{ post.post_content|linebreaks|truncatechars:50 }}</p>
+
+<p>author: {{ post.post_user }} </p>
+<p><a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
+<hr>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if post_list.has_previous %}
+            <a href="?{{ page_request_var }}={{ post_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ post_list.number }} of {{ post_list.paginator.num_pages }}.
+        </span>
+
+        {% if post_list.has_next %}
+            <a href="?{{ page_request_var }}={{ post_list.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock content %}
