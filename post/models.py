@@ -16,6 +16,7 @@ class Post(models.Model):
     post_image = models.ImageField(upload_to=upload_location, blank=True, null=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     post_date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
+    views_count = models.IntegerField(blank=True, default=0)
 
     # post_date_updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 

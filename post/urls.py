@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/user_post_list/$', views.user_post_list, name='user_post_list'),
     url(r'^(?P<id>\d+)/user_comments_list/$', views.user_comments_list, name='comments_list'),
 
+
 ]

@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from django.contrib import messages
+from . import filters
+from .filters import PostFilter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post, Comment, Tag
 from .forms import CommentForm, PostForm, TagForm
@@ -36,7 +37,7 @@ def post_list(request):
 
 def post_create(request):
     user = request.user
-    form = PostForm(request.POST or None, request.FILES or None )
+    form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         instance = form.save(commit=False)
         instance.post_user = User.objects.get(id=user.pk)
@@ -74,6 +75,7 @@ def post_detail(request, id):
     username = None
     tag_form = None
     can_edit = None
+    post_instance.views_count += 1
 
     if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
         username = auth.get_user(request).username
@@ -82,6 +84,9 @@ def post_detail(request, id):
 
     if post_instance.post_user_id == user.pk:
         can_edit = True
+        post_instance.views_count -= 1
+
+    post_instance.save()
 
     context = {
         'post_instance': post_instance,
@@ -132,8 +137,13 @@ def user_post_list(request, id):
     if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
         username = auth.get_user(request).username
 
-    query_post_list = Post.objects.filter(post_user_id=id).order_by("-post_date_created")
-    paginator = Paginator(query_post_list, 10)  # Show 10  per page
+    post_filtered = PostFilter(
+        request.GET,
+        queryset=Post.objects.filter(post_user_id=id).order_by("-post_date_created")
+    )
+
+    # query_post_list = Post.objects.filter(post_user_id=id).order_by("-post_date_created")
+    paginator = Paginator(post_filtered.qs, 5)  # Show 10  per page
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
 
@@ -145,6 +155,7 @@ def user_post_list(request, id):
         queryset = paginator.page(paginator.num_pages)
 
     context = {
+        'filter': post_filtered,
         'post_list': queryset,
         'username': username,
         'page_request_var': page_request_var,
@@ -155,10 +166,11 @@ def user_post_list(request, id):
 def user_comments_list(request, id):
     comments_list = Comment.objects.filter(user_left_id=id)
     post_list = Post.objects.filter(post_user_id=id)
-    print(comments_list)
     context = {
-        'posts':post_list,
+        'posts': post_list,
         'comments': comments_list,
         'username': auth.get_user(request).username,
     }
     return render(request, 'comments_list.html', context)
+
+

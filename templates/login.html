@@ -7,7 +7,7 @@
             {% csrf_token %}
             {{ form.as_p }}
             {% if error %}
-                <p><label class="error">{{ error }}</label>
+            <p><label class="error"><h2>{{ error }}</h2></label>
             {% endif %}
             <p><input class="button" type="submit" value="Log In">
             <button class="btn btn-info"><a href='{% url "auth:register"%}'>Register</a></button>

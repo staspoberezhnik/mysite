@@ -1,21 +1,29 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block title %}
 {{ post_instance.post_title }}
 {% endblock title %}
 {% block content %}
 
+
 <h1>{{ post_instance.post_title }}</h1>
 <h4>created :{{post_instance.post_date_created }}</h4>
+
+{% if post_instance.updated != post_instance.post_date_created%}
+<h4>updated :{{post_instance.updated }}</h4>
+{% endif%}
 
  {% if post_instance.post_image %}
     <img src='{{ post_instance.post_image.url }}' class='img-responsive' width="400px" height="400px">
     {% endif %}
 
 <p>{{ post_instance.post_content|linebreaks }}</p>
-<h4>author : {{ post_instance.post_user }}</h4>
+<p><img src="{% static 'eye.jpg' %}" width="20px" height="20px"> {{ post_instance.views_count }}</p>
+
+<h4>author : <a href='{% url "auth:view_profile" post_instance.post_user.id %}'>{{ post_instance.post_user }}</a></h4>
 
     {% if can_edit %}
-<p> <button type="button" class="btn btn-default" value="Edit"><a href="{% url 'post:edit' post_instance.id %}">Edit</a> </button></p>
+<p> <button type="button" class="btn btn-default" value="Edit"><a href="{% url 'post:edit' post_instance.id %}">Edit Post</a> </button></p>
     {% endif %}
 
 <hr>

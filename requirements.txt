@@ -1,2 +1,4 @@
 Django
 Psycopg2
+Pillow
+Django-filter

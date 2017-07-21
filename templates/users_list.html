@@ -2,7 +2,7 @@
 
 {% block content %}
     {% for user in users %}
-<h4>{{ user }}</h4>
+<h4>User : <a href='{% url "auth:view_profile" user.id %}'>{{ user }}</a></h4>
  <a href='{% url "post:user_post_list" user.id %} '>Posts</a>
 <br>
 <a href='{% url "post:comments_list" user.id%}'> Comments</a>

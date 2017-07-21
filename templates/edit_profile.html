@@ -3,13 +3,13 @@
 {% block login %}
 
 <div class="form-group">
-        <form action="/auth/register/" method="POST" class="horizontal" enctype="multipart/form-data">
+        <form action='{% url "auth:edit_profile" user.id %} ' method="POST" class="horizontal" enctype="multipart/form-data">
             {% csrf_token %}
 
             {{ user_form.as_p }}
             {{ profile_form.as_p }}
 
-            <p><input class="button" type="submit" value="register">
+            <p><input class="button" type="submit" value="Edit">
 
         </form>
 </div>

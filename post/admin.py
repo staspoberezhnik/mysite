@@ -9,7 +9,7 @@ class PostInline(admin.StackedInline):
 
 
 class PostAdmin(admin.ModelAdmin):
-    fields = ['post_title', 'post_content', 'post_date_created']
+    fields = ['post_title', 'post_content']
     inlines = [PostInline]
     list_filter = ['post_date_created']
 

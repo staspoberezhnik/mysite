@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-
-
    <!--Post :  {{ comment.post_to }}-->
-
-
+    {% if comments %}
         {% for comment in comments %}
-        <p>
+            <p>
             <strong>Post :</strong> {{ comment.post_to }}
-
-    <strong>comment :</strong> {{ comment.comment_text }} </p>
+            <strong>comment :</strong> {{ comment.comment_text }}
+            </p>
+            <hr>
         {% endfor %}
+    {% else %}
+    <h3>No comments found</h3>
+    {% endif %}
 
-<hr>
+
 <!--{% for comment in comments %}-->
 <!--{% endfor %}-->
 {% endblock content %}

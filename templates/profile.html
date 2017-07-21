@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    {% if user.profile.photo %}
+    <img src='{{ user.profile.photo.url }}' class='img-responsive' width="300px" height="300px">
+    {% endif %}
+    <h3>Username : {{ user.username }}</h3>
+
+    {% if user.first_name %}
+    <h4>First name : {{ user.first_name}}</h4>
+    {% endif %}
+
+    {% if user.last_name %}
+    <h4>Last name : {{ user.last_name}}</h4>
+    {% endif %}
+
+    {% if user.email %}
+    <h4>Email : {{ user.email}}</h4>
+    {% endif %}
+
+    {% if user.profile.telephone %}
+    <h4>Telephone : {{ user.profile.telephone}}</h4>
+    {% endif %}
+
+    {% if user.profile.country %}
+    <h4>Country : {{ user.profile.country}}</h4>
+    {% endif %}
+
+    {% if user.profile.birth_date %}
+    <h4>Date of birth : {{ user.profile.birth_date}}</h4>
+    {% endif %}
+
+    {% if user.date_joined %}
+    <h4>On site since : {{ user.date_joined}}</h4>
+    {% endif %}
+      <h4><a href='{% url "post:user_post_list" user.id %} '>Posts</a>
+    <br>
+    <a href='{% url "post:comments_list" user.id%}'> Comments</a> </h4>
+    <hr>
+
+    {% if can_edit %}
+
+<p> <button type="button" class="btn btn-default" value="Edit"><a href="{% url 'auth:edit_profile' user.id %}">Edit Profile</a> </button></p>
+
+    {% endif %}
+{% endblock content %}
