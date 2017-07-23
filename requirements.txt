@@ -2,3 +2,6 @@ Django
 Psycopg2
 Pillow
 Django-filter
+dj-database-url
+gunicorn
+whitenoise
