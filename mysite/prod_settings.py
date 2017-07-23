@@ -7,7 +7,8 @@ DATABASES['default'] = dj_database_url.config()
 
 SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 DEBUG = False
 
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
