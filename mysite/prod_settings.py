@@ -10,3 +10,4 @@ SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 ALLOWED_HOSTS = ['.herokuapp.com']
 
 DEBUG = False
+
