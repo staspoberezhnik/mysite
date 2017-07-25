@@ -1,4 +1,11 @@
-main_content{
-    margin-top: 60px;
+div.container.main_content{
+    margin-top: 80px;
 }
 
+h1{
+color: #277111;
+}
+
+div.comments{
+    margin-left: 70px;
+}
