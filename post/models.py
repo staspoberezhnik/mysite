@@ -18,7 +18,6 @@ class Post(models.Model):
     post_date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
     views_count = models.IntegerField(blank=True, default=0)
 
-    # post_date_updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     def __str__(self):
         return self.post_title
@@ -29,7 +28,7 @@ class Post(models.Model):
 
 class Tag(models.Model):
 
-    tag_text = models.CharField(max_length=30, verbose_name='Tag text' )
+    tag_text = models.CharField(max_length=30, verbose_name='Tag text')
     tag_post = models.ForeignKey(Post)
 
     def __str__(self):
@@ -45,4 +44,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment_text
-
