@@ -15,5 +15,5 @@ SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 ALLOWED_HOSTS = ['*']
 
 DEBUG = False
-
+MEDIA_ROOT =  "media_cdn/"
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
