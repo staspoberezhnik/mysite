@@ -5,3 +5,5 @@ Django-filter
 dj-database-url
 gunicorn
 whitenoise
+boto-2.48.0
+django-storages-1.6.4
