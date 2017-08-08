@@ -21,6 +21,9 @@ S3_URL = 'http://' + AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com/'
 STATIC_URL = S3_URL + 'static/'
 MEDIA_URL = S3_URL + 'media/'
 
+MEDIA_ROOT = '/media/'
+STATIC_ROOT = '/static/'
+
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += ('storages',)
