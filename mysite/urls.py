@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^post/', include('post.urls', namespace="post")),
     url(r'^auth/', include('register.urls', namespace="auth")),
-    url(r'^', include('post.urls', namespace="post")),
+    url(r'^', include('post.urls')),
 
 
 

@@ -2,6 +2,7 @@ from .settings import *
 from os import environ
 import dj_database_url
 import os
+import boto
 
 DATABASE_URL = (
      'postgres://pefykhgpynkiop:ec68d402632259d226a96da' +
@@ -12,17 +13,19 @@ DATABASES['default'] = dj_database_url.config(default=DATABASE_URL)
 
 SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY)
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = 'AKIAIJLC2VK6HWI6MGBQ'
+AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'stas-mysite'
 STATICFILES_STORAGE = 'mysite.s3utils.StaticRootS3BotoStorage'
 DEFAULT_FILE_STORAGE = 'mysite.s3utils.MediaRootS3BotoStorage'
-S3_URL = 'http://' + AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com/'
+S3_URL = 'http://s3.amazonaws.com/' + AWS_STORAGE_BUCKET_NAME
 STATIC_URL = S3_URL + 'static/'
 MEDIA_URL = S3_URL + 'media/'
 
-MEDIA_ROOT = '/media/'
-STATIC_ROOT = '/static/'
+MEDIA_ROOT = MEDIA_URL
+STATIC_ROOT = STATIC_URL
+
+conn = boto.connect_s3()
 
 ALLOWED_HOSTS = ['*']
 
