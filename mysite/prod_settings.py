@@ -13,8 +13,8 @@ DATABASES['default'] = dj_database_url.config(default=DATABASE_URL)
 
 SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY)
 
-AWS_ACCESS_KEY_ID = 'AKIAIJLC2VK6HWI6MGBQ'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = os.environ.get['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ.get['AWS_SECRET_ACCESS_KEY']
 AWS_STORAGE_BUCKET_NAME = 'stas-mysite'
 STATICFILES_STORAGE = 'mysite.s3utils.StaticRootS3BotoStorage'
 DEFAULT_FILE_STORAGE = 'mysite.s3utils.MediaRootS3BotoStorage'

@@ -26,22 +26,26 @@
 <p> <button type="button" class="btn btn-default" value="Edit"><a href="{% url 'post:edit' post_instance.id %}">Edit Post</a> </button></p>
     {% endif %}
 
-<hr>
-    {% if tag_instance %}
-    <h4>TAGS</h4>
-  {% for tag in tag_instance %}
-    <p>{{ tag.tag_text}} </p>
-    {% endfor %}
+{% if can_delete %}
+ <button type="button" class="btn btn-default" value="Delete post"><a href="{% url 'post:delete' post_instance.id %}">Delete Post</a> </button>
     {% endif %}
 
-    {% if tag_form %}
-        <form method="POST"  action="addtag/">
-        {% csrf_token %}
-        {{ tag_form }}
+<!--<hr>-->
+    <!--{% if tag_instance %}-->
+    <!--<h4>TAGS</h4>-->
+  <!--{% for tag in tag_instance %}-->
+    <!--<p>{{ tag.tag_text}} </p>-->
+    <!--{% endfor %}-->
+    <!--{% endif %}-->
 
-        <input type="submit" class="btn btn-default" value="Add Tag" size="small">
-        </form>
-    {% endif %}
+    <!--{% if tag_form %}-->
+        <!--<form method="POST"  action="addtag/">-->
+        <!--{% csrf_token %}-->
+        <!--{{ tag_form }}-->
+
+        <!--<input type="submit" class="btn btn-default" value="Add Tag" size="small">-->
+        <!--</form>-->
+    <!--{% endif %}-->
 
 <div class="comments">
     {% if comment_instance %}

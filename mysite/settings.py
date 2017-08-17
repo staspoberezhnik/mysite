@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic',
     'post',
     'register',
+    'taggit'
 
 ]
 

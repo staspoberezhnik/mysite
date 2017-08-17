@@ -7,3 +7,4 @@ gunicorn
 whitenoise
 boto
 django-storages
+django-taggit

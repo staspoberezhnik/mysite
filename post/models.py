@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.utils import timezone
+# from django.utils import timezone
+from taggit.managers import TaggableManager
 
 
 def upload_location(instance, filename):
@@ -17,7 +18,7 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     post_date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
     views_count = models.IntegerField(blank=True, default=0)
-
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return self.post_title
@@ -26,13 +27,13 @@ class Post(models.Model):
         return reverse('post:detail', kwargs={"id": self.id})
 
 
-class Tag(models.Model):
-
-    tag_text = models.CharField(max_length=30, verbose_name='Tag text')
-    tag_post = models.ForeignKey(Post)
-
-    def __str__(self):
-        return self.tag_text
+# class Tag(models.Model):
+#
+#     tag_text = models.CharField(max_length=30, verbose_name='Tag text')
+#     tag_post = models.ForeignKey(Post)
+#
+#     def __str__(self):
+#         return self.tag_text
 
 
 class Comment(models.Model):

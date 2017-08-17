@@ -25,6 +25,18 @@ HOME
                     {% endif %}
                 <p>{{ post.post_content|linebreaks|truncatechars:50 }}</p>
 
+                        {% with tags=post.tags.slugs %}
+                        {% if tags.count > 0 %}
+                <p>Tags:
+                {% for tag in tags %}
+                    {% if not forloop.first %} {% endif %}
+                    <a href=" {% url 'post:tags' tag %}  ">{{ tag }}</a>
+                {% endfor %}
+                    </p>
+                     {% endif %}
+                        {% endwith %}
+
+
                 <p>author: {{ post.post_user }} </p>
                 <p><a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
                 <hr>
