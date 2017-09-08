@@ -27,15 +27,6 @@ class Post(models.Model):
         return reverse('post:detail', kwargs={"id": self.id})
 
 
-# class Tag(models.Model):
-#
-#     tag_text = models.CharField(max_length=30, verbose_name='Tag text')
-#     tag_post = models.ForeignKey(Post)
-#
-#     def __str__(self):
-#         return self.tag_text
-
-
 class Comment(models.Model):
 
     comment_text = models.TextField()

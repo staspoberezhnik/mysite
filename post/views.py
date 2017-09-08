@@ -70,8 +70,6 @@ def post_update(request, id=None):
 def post_detail(request, id):
     post_instance = get_object_or_404(Post, id=id)
     comment_instance = Comment.objects.filter(post_to_id=id)
-    # tag_instance = Tag.objects.filter(tag_post_id=id)
-    # user_left = Post.objects.filter(post_user=request.user.pk)
     user = request.user
     comment_form = None
     username = None
@@ -83,7 +81,7 @@ def post_detail(request, id):
     if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
         username = auth.get_user(request).username
         comment_form = CommentForm
-        # tag_form = TagForm
+
 
     if post_instance.post_user_id == user.pk:
         can_edit = True
@@ -98,7 +96,6 @@ def post_detail(request, id):
         'form': comment_form,
         'username': username,
         'tag_form': tag_form,
-        # 'tag_instance': tag_instance,
         'can_edit': can_edit,
         'can_delete': can_delete,
     }
@@ -106,6 +103,7 @@ def post_detail(request, id):
 
 
 def add_comment(request, id):
+    post = get_object_or_404(Post, id=id)
     if request.POST:
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -114,17 +112,8 @@ def add_comment(request, id):
             comment.post_to = Post.objects.get(id=id)
             comment.user_left = User.objects.get(id=user.pk)
             form.save()
-    return redirect('post:home')
+    return redirect(post.get_absolute_url())
 
-
-# def add_tag(request, id):
-#     if request.POST:
-#         tag_form = TagForm(request.POST)
-#         if tag_form.is_valid():
-#             tag = tag_form.save(commit=False)
-#             tag.tag_post = Post.objects.get(id=id)
-#             tag_form.save()
-#     return redirect('post:home')
 
 def post_by_tags(request, tag):
     username = None

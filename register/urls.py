@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/view_profile/$', views.view_profile, name='view_profile'),
     url(r'^(?P<id>\d+)/edit_profile/$', views.edit_profile, name='edit_profile'),
     url(r'^(?P<id>\d+)/password/$', views.password_change, name='password_change'),
+    url(r'^my_profile/$', views.my_profile, name='my_profile'),
 
 
 ]

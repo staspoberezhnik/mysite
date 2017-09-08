@@ -136,3 +136,22 @@ def password_change(request, id):
             'username': username
         }
         return render(request, 'change_password.html', context)
+
+
+def my_profile(request):
+    user_instance = get_object_or_404(User, id=auth.get_user(request).id)
+    username = None
+    can_edit = None
+    if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
+        username = auth.get_user(request).username
+
+    if user_instance.id == request.user.id:
+        can_edit = True
+
+    context = {
+        'user': user_instance,
+        'can_edit': can_edit,
+        'username': username,
+    }
+
+    return render(request, 'profile.html', context)
