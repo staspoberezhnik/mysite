@@ -82,7 +82,6 @@ def post_detail(request, id):
         username = auth.get_user(request).username
         comment_form = CommentForm
 
-
     if post_instance.post_user_id == user.pk:
         can_edit = True
         can_delete = True
