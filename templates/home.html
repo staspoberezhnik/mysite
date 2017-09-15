@@ -17,13 +17,13 @@ HOME
 
     {% if post_list %}
             {% for post in post_list %}
-                <h3><a href='{{ post.get_absolute_url }}'>{{ post.post_title}}</a></h3>
-                <h3>{{ post.post_date_created }}</h3>
+                <h3><a href='{{ post.get_absolute_url }}'>{{ post.title}}</a></h3>
+                <h3>{{ post.date_created }}</h3>
 
-                    {% if post.post_image %}
-                        <img src='{{ post.post_image.url }}' class='img-responsive' width="400px" height="400px" >
+                    {% if post.image %}
+                        <img src='{{ post.image.url }}' class='img-responsive' width="400px" height="400px" >
                     {% endif %}
-                <p>{{ post.post_content|linebreaks|truncatechars:50 }}</p>
+                <p>{{ post.content|linebreaks|truncatechars:50 }}</p>
 
                         {% with tags=post.tags.slugs %}
                         {% if tags.count > 0 %}
@@ -37,7 +37,7 @@ HOME
                         {% endwith %}
 
 
-                <p>author: {{ post.post_user }} </p>
+                <p>author: {{ post.user }} </p>
                 <p><a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
                 <hr>
             {% endfor %}

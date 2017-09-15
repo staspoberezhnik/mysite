@@ -15,7 +15,7 @@ def post_list(request):
     if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
         username = auth.get_user(request).username
 
-    query_post_list = Post.objects.all().order_by("-post_date_created")
+    query_post_list = Post.objects.all().order_by("-date_created")
     paginator = Paginator(query_post_list, 10)  # Show 10  per page
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
@@ -40,7 +40,7 @@ def post_create(request):
     form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         instance = form.save(commit=False)
-        instance.post_user = User.objects.get(id=user.pk)
+        instance.user = User.objects.get(id=user.pk)
         instance.save()
         form.save_m2m()
         return HttpResponseRedirect(instance.get_absolute_url())
@@ -53,18 +53,32 @@ def post_create(request):
 
 def post_update(request, id=None):
     instance = get_object_or_404(Post, id=id)
-    form = PostForm(request.POST or None, request.FILES or None, instance=instance)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.save()
-        form.save_m2m()
-        return HttpResponseRedirect(instance.get_absolute_url())
-    context = {
-        "instance": instance,
-        "form": form,
-        'username': auth.get_user(request).username,
-    }
-    return render(request, 'post_form.html', context)
+    user = request.user
+    if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
+        username = auth.get_user(request).username
+    else:
+        username = None
+
+    if instance.user_id == user.pk:
+        if request.POST:
+            form = PostForm(request.POST or None, request.FILES or None, instance=instance)
+            if form.is_valid():
+                instance = form.save(commit=False)
+                instance.save()
+                form.save_m2m()
+                return HttpResponseRedirect(instance.get_absolute_url())
+            else:
+                return redirect('post:edit', id=id)
+        else:
+            form = PostForm(instance=instance)
+            context = {
+                "instance": instance,
+                "form": form,
+                'username': username,
+            }
+        return render(request, 'post_form.html', context)
+    else:
+        return redirect('post:home')
 
 
 def post_detail(request, id):
@@ -76,16 +90,16 @@ def post_detail(request, id):
     tag_form = None
     can_edit = None
     can_delete = None
-    post_instance.views_count += 1
 
     if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
         username = auth.get_user(request).username
-        comment_form = CommentForm
+        comment_form = CommentForm()
 
-    if post_instance.post_user_id == user.pk:
+    if post_instance.user_id == user.pk:
         can_edit = True
         can_delete = True
-        post_instance.views_count -= 1
+    else:
+        post_instance.views_count += 1
 
     post_instance.save()
 
@@ -119,7 +133,7 @@ def post_by_tags(request, tag):
     if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
         username = auth.get_user(request).username
 
-    query_post_list = Post.objects.filter(tags__slug=tag).order_by("-post_date_created")
+    query_post_list = Post.objects.filter(tags__slug=tag).order_by("-date_created")
     paginator = Paginator(query_post_list, 10)  # Show 10  per page
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
@@ -156,7 +170,7 @@ def user_post_list(request, id):
 
     post_filtered = PostFilter(
         request.GET,
-        queryset=Post.objects.filter(post_user_id=id).order_by("-post_date_created")
+        queryset=Post.objects.filter(user_id=id).order_by("-date_created")
     )
 
     # query_post_list = Post.objects.filter(post_user_id=id).order_by("-post_date_created")
@@ -182,7 +196,7 @@ def user_post_list(request, id):
 
 def user_comments_list(request, id):
     comments_list = Comment.objects.filter(user_left_id=id)
-    post_list = Post.objects.filter(post_user_id=id)
+    post_list = Post.objects.filter(user_id=id)
     context = {
         'posts': post_list,
         'comments': comments_list,
@@ -192,6 +206,19 @@ def user_comments_list(request, id):
 
 
 def post_delete(request, id):
-    Post.objects.get(id=id).delete()
-    Comment.objects.filter(post_to_id=id).delete()
-    return redirect('/')
+    instance = get_object_or_404(Post, id=id)
+    user = request.user
+
+    if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
+        username = auth.get_user(request).username
+    else:
+        username = None
+
+    if instance.user_id == user.pk:
+
+        Post.objects.get(id=id).delete()
+        Comment.objects.filter(post_to_id=id).delete()
+        return redirect('/')
+    else:
+        return redirect('post:home')
+

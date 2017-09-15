@@ -17,18 +17,10 @@ class RegistrationForm(UserCreationForm):
             'password2',
         ]
 
-    # def save(self, commit=True):
-    #     user = super(RegistrationForm, self).save(commit=False)
-    #     user.first_name = self.cleaned_data['first_name']
-    #     user.last_name = self.cleaned_data['last_name']
-    #     user.email = self.cleaned_data['email']
-    #
-    #     if commit:
-    #         user.save()
-    #     return user
-
 
 class ProfileForm(forms.ModelForm):
+    telephone = forms.CharField(widget=forms.TextInput)
+
     class Meta:
         model = Profile
         fields = [
@@ -38,17 +30,6 @@ class ProfileForm(forms.ModelForm):
             'photo',
 
         ]
-
-    # def save(self,commit=True):
-    #     profile = super(ProfileForm, self).save(commit=False)
-    #     profile.telephone = self.cleaned_data['telephone']
-    #     profile.birth_date = self.cleaned_data['birth_date']
-    #     profile.country = self.cleaned_data['country']
-    #     profile.photo = self.cleaned_data['photo']
-    #
-    #     if commit:
-    #         profile.save()
-    #         return profile
 
 
 class EditProfileForm(UserChangeForm):

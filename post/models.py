@@ -11,17 +11,17 @@ def upload_location(instance, filename):
 
 class Post(models.Model):
 
-    post_title = models.CharField(max_length=120)
-    post_content = models.TextField()
-    post_user = models.ForeignKey(User)
-    post_image = models.ImageField(upload_to=upload_location, blank=True, null=True)
+    title = models.CharField(max_length=120)
+    content = models.TextField()
+    user = models.ForeignKey(User)
+    image = models.ImageField(upload_to=upload_location, blank=True, null=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
-    post_date_created = models.DateTimeField(auto_now=False, auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     views_count = models.IntegerField(blank=True, default=0)
     tags = TaggableManager(blank=True)
 
     def __str__(self):
-        return self.post_title
+        return self.title
 
     def get_absolute_url(self):
         return reverse('post:detail', kwargs={"id": self.id})
@@ -30,9 +30,9 @@ class Post(models.Model):
 class Comment(models.Model):
 
     comment_text = models.TextField()
-    post_to = models.ForeignKey(Post)
+    post_to = models.ForeignKey(Post, on_delete=models.CASCADE)
     user_left = models.ForeignKey(User)
-    created = models.DateTimeField(auto_now=False, auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.comment_text

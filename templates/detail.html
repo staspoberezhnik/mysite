@@ -1,26 +1,26 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
 {% block title %}
-{{ post_instance.post_title }}
+{{ post_instance.title }}
 {% endblock title %}
 {% block content %}
 
 
-<h1>{{ post_instance.post_title }}</h1>
-<h4>created :{{post_instance.post_date_created }}</h4>
+<h1>{{ post_instance.title }}</h1>
+<h4>created :{{post_instance.date_created }}</h4>
 
-{% if post_instance.updated != post_instance.post_date_created%}
+{% if post_instance.updated != post_instance.date_created%}
 <h4>updated :{{post_instance.updated }}</h4>
 {% endif%}
 
- {% if post_instance.post_image %}
-    <img src='{{ post_instance.post_image.url }}' class='img-responsive' width="400px" height="400px">
+ {% if post_instance.image %}
+    <img src='{{ post_instance.image.url }}' class='img-responsive' width="400px" height="400px">
     {% endif %}
 
-<p>{{ post_instance.post_content|linebreaks }}</p>
+<p>{{ post_instance.content|linebreaks }}</p>
 <p><img src="{% static 'eye.jpg' %}" width="20px" height="20px"> {{ post_instance.views_count }}</p>
 
-<h4>author : <a href='{% url "auth:view_profile" post_instance.post_user.id %}'>{{ post_instance.post_user }}</a></h4>
+<h4>author : <a href='{% url "auth:view_profile" post_instance.user.id %}'>{{ post_instance.user }}</a></h4>
 
     {% if can_edit %}
 <p> <button type="button" class="btn btn-default" value="Edit"><a href="{% url 'post:edit' post_instance.id %}">Edit Post</a> </button></p>
@@ -43,7 +43,7 @@
     {% endfor %}
     {% endif %}
     {% if form %}
-        <form method="POST" enctype="multipart/form-data" action=" addcomment/ ">
+        <form method="POST" enctype="multipart/form-data" action="{% url 'post:comment' post_instance.id %}">
         {% csrf_token %}
         {{ form }}
         <input type="submit" class="btn btn-default" value="Add comment" size="small">

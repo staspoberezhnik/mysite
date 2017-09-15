@@ -14,10 +14,10 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = [
-            'post_title',
-            'post_content',
+            'title',
+            'content',
             'tags',
-            'post_image',
+            'image',
         ]
 
 
@@ -30,11 +30,3 @@ class UserForm(ModelForm):
             'email',
 
         ]
-
-
-# class TagForm(ModelForm):
-#     class Meta:
-#         model = Tag
-#         fields = [
-#             'tag_text',
-#         ]
