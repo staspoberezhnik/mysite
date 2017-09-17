@@ -208,17 +208,20 @@ def user_comments_list(request, id):
 def post_delete(request, id):
     instance = get_object_or_404(Post, id=id)
     user = request.user
-
     if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
         username = auth.get_user(request).username
     else:
         username = None
-
     if instance.user_id == user.pk:
-
-        Post.objects.get(id=id).delete()
-        Comment.objects.filter(post_to_id=id).delete()
-        return redirect('/')
+        if request.POST:
+            Post.objects.get(id=id).delete()
+            return redirect('/')
+        else:
+            context = {
+                'post': instance,
+                'username': username,
+            }
+            return render(request, 'post_delete_form.html', context)
     else:
         return redirect('post:home')
 

@@ -8,3 +8,4 @@ whitenoise
 boto
 django-storages
 django-taggit
+python-decouple

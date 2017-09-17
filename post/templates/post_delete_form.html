@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='col-sm-6 col-sm-offset-3'>
+<h1>Delete Post</h1>
+    <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+        <h2>{{ post.title }}</h2>
+        <h4>created :{{post.date_created }}</h4>
+             {% if post.image %}
+        <img src='{{ post.image.url }}' class='img-responsive' width="400px" height="400px">
+        {% endif %}
+        <p>{{ post.content|linebreaks }}</p>
+    <input type="submit" class='btn btn-default' value="Delete post" />
+    </form>
+    </div>
+{% endblock content %}
