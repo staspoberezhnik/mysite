@@ -37,7 +37,7 @@
     {% endif %}
       <h4><a href='{% url "post:user_post_list" user.id %} '>Posts</a>
     <br>
-    <a href='{% url "post:comments_list" user.id%}'> Comments</a> </h4>
+    <a href='{% url "post:user_comments_list" user.id%}'> Comments</a> </h4>
     <hr>
 
     {% if can_edit %}

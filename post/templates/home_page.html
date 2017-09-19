@@ -30,7 +30,7 @@ HOME
                 <p>Tags:
                 {% for tag in tags %}
                     {% if not forloop.first %} {% endif %}
-                    <a href=" {% url 'post:tags' tag %}  ">{{ tag }}</a>
+                    <a href=" {% url 'post:post_by_tags' tag %}  ">{{ tag }}</a>
                 {% endfor %}
                     </p>
                      {% endif %}

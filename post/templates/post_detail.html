@@ -23,11 +23,11 @@
 <h4>author : <a href='{% url "auth:view_profile" post_instance.user.id %}'>{{ post_instance.user }}</a></h4>
 
     {% if can_edit %}
-<p> <button type="button" class="btn btn-default" value="Edit"><a href="{% url 'post:edit' post_instance.id %}">Edit Post</a> </button></p>
+<p> <button type="button" class="btn btn-default" value="Edit"><a href="{% url 'post:edit_post' post_instance.id %}">Edit Post</a> </button></p>
     {% endif %}
 
 {% if can_delete %}
- <button type="button" class="btn btn-default" value="Delete post"><a href="{% url 'post:delete' post_instance.id %}">Delete Post</a> </button>
+ <button type="button" class="btn btn-default" value="Delete post"><a href="{% url 'post:delete_post' post_instance.id %}">Delete Post</a> </button>
     {% endif %}
 
 
@@ -43,7 +43,7 @@
     {% endfor %}
     {% endif %}
     {% if form %}
-        <form method="POST" enctype="multipart/form-data" action="{% url 'post:comment' post_instance.id %}">
+        <form method="POST" enctype="multipart/form-data" action="{% url 'post:add_comment' post_instance.id %}">
         {% csrf_token %}
         {{ form }}
         <input type="submit" class="btn btn-default" value="Add comment" size="small">

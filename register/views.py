@@ -54,7 +54,7 @@ def register(request):
             profile.save()
             return redirect('post:home')
         else:
-            return redirect('post:users')
+            return redirect('post:users_list')
     else:
         context = {
             'user_form': RegistrationForm(),

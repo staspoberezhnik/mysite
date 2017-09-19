@@ -50,9 +50,9 @@
             <li><a href='{% url "post:home" %}'>Home</a></li>
 
                 {% if username %}
-            <li><a href='{% url "post:create" %} '>Create post</a></li>
+            <li><a href='{% url "post:post_create" %} '>Create post</a></li>
                 {% endif %}
-            <li><a href='{% url "post:users" %}'>Users list</a></li>
+            <li><a href='{% url "post:users_list" %}'>Users list</a></li>
 
                 {% if username %}
                 <li><a href='{% url "auth:logout"%}'>Log out "{{username}}"</a></li>

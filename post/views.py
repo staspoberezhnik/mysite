@@ -32,7 +32,7 @@ def post_list(request):
         'username': username,
         'page_request_var': page_request_var,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'home_page.html', context)
 
 
 def post_create(request):
@@ -48,7 +48,7 @@ def post_create(request):
         "form": form,
         'username': auth.get_user(request).username,
     }
-    return render(request, 'post_form.html', context)
+    return render(request, 'post_creation_form.html', context)
 
 
 def post_update(request, id=None):
@@ -68,7 +68,7 @@ def post_update(request, id=None):
                 form.save_m2m()
                 return HttpResponseRedirect(instance.get_absolute_url())
             else:
-                return redirect('post:edit', id=id)
+                return redirect('post:edit_post', id=id)
         else:
             form = PostForm(instance=instance)
             context = {
@@ -76,7 +76,7 @@ def post_update(request, id=None):
                 "form": form,
                 'username': username,
             }
-        return render(request, 'post_form.html', context)
+        return render(request, 'post_creation_form.html', context)
     else:
         return redirect('post:home')
 
@@ -112,7 +112,7 @@ def post_detail(request, id):
         'can_edit': can_edit,
         'can_delete': can_delete,
     }
-    return render(request, 'detail.html', context)
+    return render(request, 'post_detail.html', context)
 
 
 def add_comment(request, id):
@@ -150,7 +150,7 @@ def post_by_tags(request, tag):
         'username': username,
         'page_request_var': page_request_var,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'home_page.html', context)
 
 
 def users_list(request):
@@ -191,7 +191,7 @@ def user_post_list(request, id):
         'username': username,
         'page_request_var': page_request_var,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'home_page.html', context)
 
 
 def user_comments_list(request, id):
