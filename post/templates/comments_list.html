@@ -2,17 +2,17 @@
 
 {% block content %}
    <!--Post :  {{ comment.post_to }}-->
-    {% if comments %}
-        {% for comment in comments %}
+
+    {% for comment in comments %}
             <p>
             <strong>Post :</strong> {{ comment.post_to }}
             <strong>comment :</strong> {{ comment.comment_text }}
             </p>
             <hr>
-        {% endfor %}
-    {% else %}
-    <h3>No comments found</h3>
-    {% endif %}
+
+        {% empty %}
+        <h3>No comments found</h3>
+    {% endfor %}
 
 
 <!--{% for comment in comments %}-->

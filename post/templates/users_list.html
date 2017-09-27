@@ -2,11 +2,13 @@
 
 {% block content %}
     {% for user in users %}
-<h4>User : <a href='{% url "auth:view_profile" user.id %}'>{{ user }}</a></h4>
- <a href='{% url "post:user_post_list" user.id %} '>Posts</a>
-<br>
-<a href='{% url "post:user_comments_list" user.id%}'> Comments</a>
-<hr>
+        <h4>User : <a href='{% url "auth:view_profile" user.id %}'>{{ user }}</a></h4>
+         <a href='{% url "post:user_post_list" user.id %} '>Posts</a>
+        <br>
+        <a href='{% url "post:user_comments_list" user.id%}'> Comments</a>
+        <hr>
+        {% empty %}
+           <h4>No Users found</h4>
     {% endfor %}
 
 {% endblock content %}
