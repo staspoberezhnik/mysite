@@ -46,8 +46,10 @@ def register(request):
         if newuser_form.is_valid() and profile_form.is_valid():
 
             newuser_form.save()
-            newuser = auth.authenticate(username=newuser_form.cleaned_data['username'],
-                                        password=newuser_form.cleaned_data['password1'], )
+            newuser = auth.authenticate(
+                username=newuser_form.cleaned_data['username'],
+                password=newuser_form.cleaned_data['password1'], )
+
             auth.login(request, newuser)
             profile = profile_form.save(commit=False)
             profile.user = User.objects.get(id=newuser.id)
@@ -67,7 +69,9 @@ def view_profile(request, id):
     user_instance = get_object_or_404(User, id=id)
     username = None
     can_edit = None
-    if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
+    if request.user.is_staff or\
+            request.user.is_superuser or\
+            request.user.is_authenticated:
         username = auth.get_user(request).username
 
     if user_instance.id == request.user.id:
@@ -87,7 +91,9 @@ def edit_profile(request, id):
     profile_instance = user_instance.profile
     user = request.user
 
-    if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
+    if request.user.is_staff or\
+            request.user.is_superuser or\
+            request.user.is_authenticated:
         username = auth.get_user(request).username
 
         if user_instance.id == user.pk:
@@ -123,7 +129,9 @@ def password_change(request, id):
     user_instance = get_object_or_404(User, id=id)
     user = request.user
     username = None
-    if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
+    if request.user.is_staff or\
+            request.user.is_superuser or\
+            request.user.is_authenticated:
         username = auth.get_user(request).username
 
         if user_instance.id == user.pk:
@@ -154,7 +162,9 @@ def my_profile(request):
 
     username = None
     can_edit = None
-    if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
+    if request.user.is_staff or\
+            request.user.is_superuser or\
+            request.user.is_authenticated:
         username = auth.get_user(request).username
 
     if user_instance.id == request.user.id:

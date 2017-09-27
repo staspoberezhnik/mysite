@@ -283,7 +283,9 @@ def user_comments_list(request, id):
 def post_delete(request, id):
     instance = get_object_or_404(Post, id=id)
     user = request.user
-    if request.user.is_staff or request.user.is_superuser or request.user.is_authenticated:
+    if request.user.is_staff or\
+            request.user.is_superuser or\
+            request.user.is_authenticated:
         username = auth.get_user(request).username
     else:
         username = None
